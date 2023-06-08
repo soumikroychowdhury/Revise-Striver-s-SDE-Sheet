@@ -1,0 +1,21 @@
+vector<int> Solution::repeatedNumber(const vector<int> &A) {
+    int xr=0;
+    for(int i=0;i<A.size();i++){
+        xr^=A[i];
+        xr^=(i+1);
+    }
+    int di=(xr&~(xr-1));
+    int box0=0,box1=0;
+    for(int i=0;i<A.size();i++){
+        if(A[i]&di) box1^=A[i];
+        else box0^=A[i];
+        if((i+1)&di) box1^=(i+1);
+        else box0^=(i+1);
+    }
+    int count=0;
+    for(int i=0;i<A.size();i++){
+        if(A[i]==box0) count++;
+    }
+    if(count==2) return {box0,box1};
+    else return {box1,box0};
+}
