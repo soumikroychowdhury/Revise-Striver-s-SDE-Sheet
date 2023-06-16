@@ -1,0 +1,31 @@
+class Solution
+{
+    class meet{
+    public:
+        int start;
+        int end;
+    };
+    bool static comp(meet a,meet b){
+        return a.end<b.end;
+    }
+    public:
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    int maxMeetings(int start[], int end[], int n)
+    {
+        meet a[n];
+        for(int i=0;i<n;i++){
+            a[i].start=start[i],a[i].end=end[i];
+        }
+        sort(a,a+n,comp);
+        int limit=a[0].end;
+        int ans=1;
+        for(int i=1;i<n;i++){
+            if(a[i].start>limit){
+                limit=a[i].end;
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
