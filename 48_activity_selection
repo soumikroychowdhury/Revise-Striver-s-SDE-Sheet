@@ -1,0 +1,24 @@
+class meet{
+public:
+    int start;
+    int finish;
+};
+bool static comp(meet a,meet b){
+    return a.finish<b.finish;
+}
+int maximumActivities(vector<int> &start, vector<int> &finish) {
+    meet m[start.size()];
+    for(int i=0;i<start.size();i++){
+        m[i].start=start[i];
+        m[i].finish=finish[i];
+    }
+    sort(m,m+start.size(),comp);
+    int ans=1,limit=m[0].finish;
+    for(int i=1;i<start.size();i++){
+        if(m[i].start>=limit){
+            ans++;
+            limit=m[i].finish;
+        }
+    }
+    return ans;
+}
