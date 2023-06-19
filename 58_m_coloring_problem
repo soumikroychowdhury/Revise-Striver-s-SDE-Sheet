@@ -1,0 +1,26 @@
+class Solution{
+    bool check(bool graph[101][101],int n,int node,int color[],int i){
+        for(int k=0;k<n;k++){
+            if(k!=node&&graph[node][k]==1&&color[k]==i) return false;
+        }
+        return true;
+    }
+    bool solve(bool graph[101][101],int m,int n,int node,int color[]){
+        if(node==n) return true;
+        for(int i=1;i<=m;i++){
+            if(check(graph,n,node,color,i)){
+                color[node]=i;
+                if(solve(graph,m,n,node+1,color)) return true;
+                color[node]=0;
+            }
+        }
+        return false;
+    }
+public:
+    // Function to determine if graph can be coloured with at most M colours such
+    // that no two adjacent vertices of graph are coloured with same colour.
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        int color[n]={0};
+        return solve(graph,m,n,0,color);
+    }
+};
