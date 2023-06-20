@@ -1,0 +1,25 @@
+class Solution {
+    unordered_map<string,int> m;
+    vector<string> ans;
+    void solve(int index,string temp,string s){
+        if(index==s.size()){
+            ans.push_back(temp);
+            return;
+        }
+        string s1;
+        for(int i=index;i<s.size();i++){
+            s1+=s[i];
+            if(m.find(s1)!=m.end()){
+                if(temp.size()==0) solve(i+1,s1,s);
+                else solve(i+1,temp+" "+s1,s);
+            }
+        }
+    }
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        for(auto i:wordDict) m[i]++;
+        string temp;
+        solve(0,temp,s);
+        return ans;
+    }
+};
