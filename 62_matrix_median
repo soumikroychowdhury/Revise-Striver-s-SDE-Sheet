@@ -1,0 +1,19 @@
+int countSmaller(vector<int> &row,int target){
+    int low=0,high=row.size()-1;
+    while(low<=high){
+        int mid=(low+high)>>1;
+        if(row[mid]<=target) low=mid+1;
+        else high=mid-1;
+    }
+    return low;
+}
+int Solution::findMedian(vector<vector<int> > &A) {
+    int n=A.size(),m=A[0].size(),low=1,high=1e9;
+    while(low<=high){
+        int count=0,mid=(low+high)>>1;
+        for(int i=0;i<n;i++) count+=countSmaller(A[i],mid);
+        if(count<=(n*m)/2) low=mid+1;
+        else high=mid-1;
+    }
+    return low;
+}
