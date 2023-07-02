@@ -1,0 +1,29 @@
+class Solution {
+    bool solve(int i,int j,string &s,vector<vector<bool>> &dp){
+        if(i==j) return dp[i][j]=1;
+        if(j-i==1){
+            if(s[i]==s[j]) return dp[i][j]=1;
+            else return dp[i][j]=0;
+        }
+        if(s[i]==s[j]&&dp[i+1][j-1]==1) return dp[i][j]=1;
+        else return dp[i][j]=0;
+    }
+public:
+    string longestPalindrome(string s) {
+        int n=s.size();
+        int start=0,ml=0;
+        vector<vector<bool>> dp(n,vector<bool>(n,false));
+        for(int g=0;g<n;g++){
+            for(int i=0,j=g;j<n;i++,j++){
+                solve(i,j,s,dp);
+                if(dp[i][j]){
+                    if(j-i+1>ml){
+                        start=i;
+                        ml=j-i+1;
+                    }
+                }
+            }
+        }
+        return s.substr(start,ml);
+    }
+};
