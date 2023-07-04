@@ -1,0 +1,14 @@
+bool path(TreeNode<int> *node,int x,vector<int> &ans){
+	if(!node) return false;
+	ans.push_back(node->data);
+	if(node->data==x) return true;
+	if(path(node->left,x,ans)||path(node->right,x,ans)) return true;
+	ans.pop_back();
+	return false;
+}
+vector<int> pathInATree(TreeNode<int> *root, int x)
+{
+    vector<int> ans;
+	path(root,x,ans);
+	return ans;
+}
