@@ -1,0 +1,13 @@
+vector<int> v1,v2,v3;
+void TreeTraversal(BinaryTreeNode<int> *root){
+    if(!root) return;
+    v2.push_back(root->data);
+    TreeTraversal(root->left);
+    v1.push_back(root->data);
+    TreeTraversal(root->right);
+    v3.push_back(root->data);
+}
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root){
+    TreeTraversal(root);
+    return {v1,v2,v3};
+}
