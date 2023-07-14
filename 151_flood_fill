@@ -1,0 +1,18 @@
+class Solution {
+    void dfs(int row,int col,vector<vector<int>> &ans,vector<vector<int>> &image,int in,int color,int dirs[]){
+        ans[row][col]=color;
+        int m=ans.size(),n=ans[0].size();
+        for(int i=0;i<4;i++){
+            int nr=row+dirs[i],nc=col+dirs[i+1];
+            if(nr>=0&&nr<m&&nc>=0&&nc<n&&image[nr][nc]==in&&ans[nr][nc]!=color) dfs(nr,nc,ans,image,in,color,dirs);
+        }
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int in=image[sr][sc];
+        vector<vector<int>> ans=image;
+        int dirs[]={0,1,0,-1,0};
+        dfs(sr,sc,ans,image,in,color,dirs);
+        return ans;
+    }
+};
