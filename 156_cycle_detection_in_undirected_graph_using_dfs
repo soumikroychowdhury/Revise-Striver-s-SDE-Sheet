@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+bool detect(int node,int parent,vector<vector<int>> adj,vector<int> &vis){
+    vis[node]=1;
+    for(auto child:adj[node]){
+        if(!vis[child]){
+            if(detect(child,node,adj,vis)) return true;
+        }
+        else if(child!=parent) return true;
+    }
+    return false;
+}
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    vector<vector<int>> adj(n);
+    for(int i=0;i<m;i++){
+        int a=edges[i][0]-1,b=edges[i][1]-1;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    vector<int> vis(n,0);
+    for(int i=0;i<n;i++){
+        if(!vis[i]) if(detect(i,-1,adj,vis)) return "Yes";
+    }
+    return "No";
+}
