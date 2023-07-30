@@ -1,0 +1,65 @@
+class Solution
+{
+    class DSU{
+        vector<int> rank,parent,size;
+        public:
+        DSU(int n){
+            rank.resize(n,0);
+            parent.resize(n);
+            size.resize(n);
+            for(int i=0;i<n;i++){
+                parent[i]=i;
+                size[i]=1;
+            }
+        }
+        int findparent(int node){
+            if(node==parent[node]) return node;
+            return parent[node]=findparent(parent[node]);
+        }
+        void unionbyrank(int u,int v){
+            int up=findparent(u),uv=findparent(v);
+            if(up==uv) return;
+            if(rank[up]<rank[uv]) parent[up]=uv;
+            else if(rank[up]>rank[uv]) parent[uv]=up;
+            else{
+                parent[up]=uv;
+                rank[up]++;
+            }
+        }
+        void unionbysize(int u,int v){
+            int up=findparent(u),uv=findparent(v);
+            if(up==uv) return;
+            if(size[up]<size[uv]){
+                parent[up]=uv;
+                size[uv]+=size[up];
+            }
+            else{
+                parent[uv]=up;
+                size[up]+=size[uv];
+            }
+        }
+    };
+	public:
+	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        vector<pair<int,pair<int,int>>> edges;
+        for(int i=0;i<V;i++){
+            for(auto it:adj[i]){
+                int an=it[0],w=it[1],node=i;
+                edges.push_back({w,{node,an}});
+            }
+        }
+        DSU ds(V);
+        sort(edges.begin(),edges.end());
+        int sum=0;
+        for(auto it:edges){
+            int w=it.first,u=it.second.first,v=it.second.second;
+            if(ds.findparent(u)!=ds.findparent(v)){
+                sum+=w;
+                ds.unionbysize(u,v);
+            }
+        }
+        return sum;
+    }
+};
