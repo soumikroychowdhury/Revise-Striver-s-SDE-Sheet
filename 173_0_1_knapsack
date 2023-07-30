@@ -1,0 +1,19 @@
+class Solution
+{
+    public:
+    //Function to return max value that can be put in knapsack of capacity W.
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       vector<vector<int>> dp(n,vector<int>(W+1,0));
+       for(int i=wt[0];i<=W;i++) dp[0][i]=val[0];
+       for(int index=1;index<n;index++){
+           for(int capacity=0;capacity<=W;capacity++){
+               int nt=dp[index-1][capacity];
+               int t=INT_MIN;
+               if(wt[index]<=capacity) t=val[index]+dp[index-1][capacity-wt[index]];
+               dp[index][capacity]=max(t,nt);
+           }
+       }
+       return dp[n-1][W];
+    }
+};
