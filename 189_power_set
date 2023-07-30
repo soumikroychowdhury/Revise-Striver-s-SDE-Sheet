@@ -1,0 +1,17 @@
+class Solution{
+	public:
+		vector<string> AllPossibleStrings(string s){
+		    int n=s.size();
+		    vector<string> ans;
+		    string temp;
+		    for(int i=0;i<(1<<n);i++){
+		        temp.clear();
+		        for(int j=0;j<n;j++){
+		            if(i&(1<<j)) temp.push_back(s[j]);
+		        }
+		        if(!temp.empty()) ans.push_back(temp);
+		    }
+		    sort(ans.begin(),ans.end());
+		    return ans;
+		}
+};
